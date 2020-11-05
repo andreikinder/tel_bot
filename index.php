@@ -13,8 +13,8 @@ try {
     // Set webhook
     $result = $telegram->setWebhook($hook_url);
     if ($result->isOk()) {
-        echo $result->getDescription();
-        echo 'success';
+        $result->getDescription();
+        print_r($result);
     }
 } catch (Longman\TelegramBot\Exception\TelegramException $e) {
     // log telegram errors
