@@ -17,6 +17,5 @@ try {
     }
 } catch (Longman\TelegramBot\Exception\TelegramException $e) {
     // log telegram errors
-     echo $e->getMessage();
-    echo 'eror';
+   //  echo $e->getMessage();
 }

@@ -2,6 +2,10 @@
 // Load composer
 require __DIR__ . '/vendor/autoload.php';
 
+use Longman\TelegramBot\Request;
+
+
+
 $bot_api_key  = '1306244872:AAEcthEZKPgA1tT96DekoZVHQU2td-iMltk';
 $bot_username = 'news_caf_bus_bot';
 
@@ -10,7 +14,21 @@ try {
     $telegram = new Longman\TelegramBot\Telegram($bot_api_key, $bot_username);
 
     // Handle telegram webhook request
-    $telegram->handle();
+    $server_response = $telegram->handle();
+    $entityBody = file_get_contents('php://input');
+    if ($server_response) {
+
+        $send_text = "";
+        $this_update = json_decode($entityBody);
+
+        $this_message = (isset($this_update->edited_message) ? $this_update->edited_message : $this_update->message);
+        $chat_id = $this_message->chat->id;
+
+        $result = Request::sendMessage([
+            'chat_id' => $chat_id,
+            'text' => 'Your utf8 text 😜 ...',
+        ]);
+    }
 } catch (Longman\TelegramBot\Exception\TelegramException $e) {
     // Silence is golden!
     // log telegram errors
