@@ -24,9 +24,11 @@ try {
         $this_message = (isset($this_update->edited_message) ? $this_update->edited_message : $this_update->message);
         $chat_id = $this_message->chat->id;
 
+        $send_text = $this_message->text;
+
         $result = Request::sendMessage([
             'chat_id' => $chat_id,
-            'text' => 'Your utf8 text 😜 ...',
+            'text' => $send_text,
         ]);
     }
 } catch (Longman\TelegramBot\Exception\TelegramException $e) {
