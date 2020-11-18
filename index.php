@@ -30,7 +30,7 @@ try {
 
 
         if($this_message->text == 'vk'){
-            header('Content-type: text/html; charset=utf-8');
+            //header('Content-type: text/html; charset=utf-8');
             $wall_id="-69632488"; // Положительное число: пользователь. Отрицательное: группа.
             $count="2"; // Количество записей, которое необходимо получить. Максимальное значение: 100.
             $api = file_get_contents("http://api.vk.com/method/wall.get?owner_id={$wall_id}&count={$count}");
@@ -41,6 +41,7 @@ try {
                     'chat_id' => $chat_id,
                     'text' => $send_text,
                 ]);
+                file_put_contents('send.txt', $send_text);
             }
 
         }
