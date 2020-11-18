@@ -26,12 +26,29 @@ try {
         $this_message = (isset($this_update->edited_message) ? $this_update->edited_message : $this_update->message);
         $chat_id = $this_message->chat->id;
 
-        $send_text = $this_message->text;
+       // $send_text = $this_message->text;
 
-        $result = Request::sendMessage([
-            'chat_id' => $chat_id,
-            'text' => $send_text,
-        ]);
+
+        if($this_message->text == 'vk'){
+            header('Content-type: text/html; charset=utf-8');
+            $wall_id="-69632488"; // Положительное число: пользователь. Отрицательное: группа.
+            $count="2"; // Количество записей, которое необходимо получить. Максимальное значение: 100.
+            $api = file_get_contents("http://api.vk.com/method/wall.get?owner_id={$wall_id}&count={$count}");
+            $wall = json_decode($api,true);
+            foreach ($wall['response'] as $item => $result) {
+                $send_text = '<p>' . $result['text'].'</p>';
+                $result = Request::sendMessage([
+                    'chat_id' => $chat_id,
+                    'text' => $send_text,
+                ]);
+            }
+
+        }
+//
+//        $result = Request::sendMessage([
+//            'chat_id' => $chat_id,
+//            'text' => $send_text,
+//        ]);
     }
 } catch (Longman\TelegramBot\Exception\TelegramException $e) {
     // Silence is golden!
