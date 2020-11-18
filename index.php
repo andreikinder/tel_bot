@@ -18,6 +18,8 @@ try {
     $entityBody = file_get_contents('php://input');
     if ($server_response) {
 
+        file_put_contents('server_response.txt', $server_response);
+        file_put_contents('entityBody.txt', $entityBody);
         $send_text = "";
         $this_update = json_decode($entityBody);
 
