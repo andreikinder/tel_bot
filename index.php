@@ -44,6 +44,7 @@ try {
                 $result = Request::sendMessage([
                     'chat_id' => $chat_id,
                     'text' => $send_text,
+                    'parse_mode' => 'HTML'
                 ]);
                 file_put_contents('send.txt', $send_text);
 
