@@ -55,7 +55,7 @@ try {
             $item = $xml->channel->item[0];
             $itm_title = $item->title;
             $itm_url = $item->link;
-            $send_text = '<p>'. $itm_title. '"<p/>';
+            $send_text = $itm_title. '<br>';
             $send_text .= '<a href="'.$itm_url.'"> Читать далее </a>';
 
 
