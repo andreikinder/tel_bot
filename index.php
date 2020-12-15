@@ -4,7 +4,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Longman\TelegramBot\Request;
 
-
+use Longman\TelegramBot\Entities\Keyboard;
 
 $bot_api_key  = '1306244872:AAEcthEZKPgA1tT96DekoZVHQU2td-iMltk';
 $bot_username = 'news_caf_bus_bot';
@@ -17,6 +17,8 @@ try {
     $server_response = $telegram->handle();
     $entityBody = file_get_contents('php://input');
     if ($server_response) {
+
+        $keybord = new Keyboard( [['Вконтакте' => 'vk'], ['Сайт' => 'site']]);
 
         file_put_contents('server_response.txt', $server_response);
         file_put_contents('entityBody.txt', $entityBody);
@@ -40,16 +42,8 @@ try {
             $wall = json_decode($api,true);
             $arr = $wall['response']['items'];
             foreach ($arr as $item) {
-
                 $send_text = '<a href="https://vk.com/wall-69632488_'.$item['id'].'">Читать далее</a>';
-
-                $result = Request::sendMessage([
-                    'chat_id' => $chat_id,
-                    'text' => $send_text,
-                    'parse_mode' => 'HTML'
-                ]);
                 file_put_contents('send.txt', $send_text);
-
             }
 
 
@@ -61,21 +55,21 @@ try {
             $item = $xml->channel->item[0];
             $itm_title = $item->title;
             $itm_url = $item->link;
-            //$send_text = '<img src="'. . '"/>';
-            $send_text = '<a href="'.$itm_url.'">' . $itm_title .'</a>';
+            $send_text = '<p>'. $itm_title. '"<p/>';
+            $send_text .= '<a href="'.$itm_url.'"> Читать далее </a>';
 
-            $result = Request::sendMessage([
-                'chat_id' => $chat_id,
-                'text' => $send_text,
-                'parse_mode' => 'HTML'
-            ]);
 
+        } else {
+            $send_text = '<p>Нет такого варианта ответа.<p/>';
         }
-//
-//        $result = Request::sendMessage([
-//            'chat_id' => $chat_id,
-//            'text' => $send_text,
-//        ]);
+
+        $result = Request::sendMessage([
+            'chat_id' => $chat_id,
+            'text' => $send_text,
+            'parse_mode' => 'HTML',
+            'reply_markup' => $keybord
+        ]);
+
     }
 } catch (Longman\TelegramBot\Exception\TelegramException $e) {
     // Silence is golden!
