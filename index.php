@@ -18,9 +18,7 @@ try {
     $entityBody = file_get_contents('php://input');
     if ($server_response) {
 
-        $keybord = new Keyboard( [
-            ['Вконтакте' => 'vk'],
-            ['Сайт' => 'site']]);
+        $keybord = new Keyboard( ['Вконтакте','Сайт']);
 
         file_put_contents('server_response.txt', $server_response);
         file_put_contents('entityBody.txt', $entityBody);
@@ -35,7 +33,7 @@ try {
         $text = strtolower($this_message->text);
 
 
-        if($text== 'vk'){
+        if($text== 'Вконтакте'){
             //header('Content-type: text/html; charset=utf-8');
             $wall_id="-69632488"; // Положительное число: пользователь. Отрицательное: группа.
             $count="1"; // Количество записей, которое необходимо получить. Максимальное значение: 100.
@@ -50,7 +48,7 @@ try {
 
 
 
-        } elseif ($text == 'site') {
+        } elseif ($text == 'Сайт') {
             $url = "https://magtu.ru/?format=feed&type=rss";
             $xml = simplexml_load_file($url);
 
