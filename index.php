@@ -18,7 +18,9 @@ try {
     $entityBody = file_get_contents('php://input');
     if ($server_response) {
 
-        $keybord = new Keyboard( ['Вконтакте', 'Сайт']);
+        $keybord = new Keyboard( [
+            ['Вконтакте' => 'vk'],
+            ['Сайт' => 'site']]);
 
         file_put_contents('server_response.txt', $server_response);
         file_put_contents('entityBody.txt', $entityBody);
@@ -67,7 +69,7 @@ try {
             'chat_id' => $chat_id,
             'text' => $send_text,
             'parse_mode' => 'HTML',
-            //'reply_markup' => $keybord
+            'reply_markup' => $keybord
         ]);
 
     }
