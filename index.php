@@ -28,18 +28,20 @@ try {
 
        // $send_text = $this_message->text;
 
+        $text = strtolower($this_message->text);
 
-        if($this_message->text == 'vk'){
+
+        if($text== 'vk'){
             //header('Content-type: text/html; charset=utf-8');
             $wall_id="-69632488"; // Положительное число: пользователь. Отрицательное: группа.
-            $count="5"; // Количество записей, которое необходимо получить. Максимальное значение: 100.
+            $count="1"; // Количество записей, которое необходимо получить. Максимальное значение: 100.
             $ACCESS_TOKEN ='1397aac61397aac61397aac6c213e2ab25113971397aac64c22dbfee61060bf0a30780f';
             $api = file_get_contents("http://api.vk.com/method/wall.get?owner_id={$wall_id}&count={$count}&access_token={$ACCESS_TOKEN}&v=5.62");
             $wall = json_decode($api,true);
             $arr = $wall['response']['items'];
             foreach ($arr as $item) {
 
-                $send_text = '<a href="https://vk.com/wall-69632488_'.$item['id'].'">' . $item['text']. '</a>';
+                $send_text = '<a href="https://vk.com/wall-69632488_'.$item['id'].'">Читать далее</a>';
 
                 $result = Request::sendMessage([
                     'chat_id' => $chat_id,
@@ -51,6 +53,22 @@ try {
             }
 
 
+
+        } elseif ($text == 'site') {
+            $url = "https://magtu.ru/?format=feed&type=rss";
+            $xml = simplexml_load_file($url);
+
+            $item = $xml->item[0];
+            $itm_title = $item->title;
+            $itm_url = $item->link;
+            //$send_text = '<img src="'. . '"/>';
+            $send_text = '<a href="'.$itm_url.'">' . $itm_title .'</a>';
+
+            $result = Request::sendMessage([
+                'chat_id' => $chat_id,
+                'text' => $send_text,
+                'parse_mode' => 'HTML'
+            ]);
 
         }
 //
