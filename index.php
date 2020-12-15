@@ -62,7 +62,7 @@ try {
 
 
         } else {
-            $send_text = '<p>Нет такого варианта ответа.<p/>';
+            $send_text = 'Нет такого варианта ответа.';
         }
 
         $result = Request::sendMessage([
