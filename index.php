@@ -55,8 +55,8 @@ try {
             $item = $xml->channel->item[0];
             $itm_title = $item->title;
             $itm_url = $item->link;
-            $send_text = $itm_title. '<br>';
-            $send_text .= '<a href="'.$itm_url.'"> Читать далее </a>';
+            //$send_text = $itm_title. '<br>';
+            $send_text = '<a href="'.$itm_url.'"> Читать далее </a>';
 
 
         } else {
@@ -67,7 +67,7 @@ try {
             'chat_id' => $chat_id,
             'text' => $send_text,
             'parse_mode' => 'HTML',
-            'reply_markup' => $keybord
+            //'reply_markup' => $keybord
         ]);
 
     }
