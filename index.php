@@ -58,7 +58,7 @@ try {
             $url = "https://magtu.ru/?format=feed&type=rss";
             $xml = simplexml_load_file($url);
 
-            $item = $xml->item[0];
+            $item = $xml->channel->item[0];
             $itm_title = $item->title;
             $itm_url = $item->link;
             //$send_text = '<img src="'. . '"/>';
